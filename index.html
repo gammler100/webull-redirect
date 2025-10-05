@@ -3,17 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Open Webull Ticker</title>
+  <title>Redirecting to Webull...</title>
   <script>
-    const urlParams = new URLSearchParams(window.location.search);
-    const ticker = (urlParams.get('ticker') || 'AAPL').toUpperCase();
-    const deepLink = `https://act.webull.com/quote/${ticker}`;
-    const fallback = `https://www.webull.com/quote/nasdaq-${ticker.toLowerCase()}`;
-    window.location.href = deepLink;
-    setTimeout(() => { window.location.href = fallback; }, 2000);
+    document.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const ticker = (urlParams.get('ticker') || 'AAPL').toUpperCase();
+
+      // Try to open Webull app
+      const appLink = `webull://quotes?tickerSymbol=${ticker}&region=us`;
+
+      // Fallback: open browser quote
+      const webFallback = `https://www.webull.com/quote/nasdaq-${ticker.toLowerCase()}`;
+
+      // Update the visible message
+      document.getElementById('ticker').textContent = ticker;
+
+      // Redirect attempts
+      window.location.href = appLink;
+      setTimeout(() => {
+        window.location.href = webFallback;
+      }, 2000);
+    });
   </script>
 </head>
-<body>
+<body style="font-family: sans-serif; text-align:center; padding:50px;">
   <p>Redirecting to Webull for <strong id="ticker">AAPL</strong>...</p>
 </body>
 </html>
