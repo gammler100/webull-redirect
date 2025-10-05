@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Open Webull Ticker</title>
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const ticker = (urlParams.get('ticker') || 'AAPL').toUpperCase();
+    const deepLink = `https://act.webull.com/quote/${ticker}`;
+    const fallback = `https://www.webull.com/quote/nasdaq-${ticker.toLowerCase()}`;
+    window.location.href = deepLink;
+    setTimeout(() => { window.location.href = fallback; }, 2000);
+  </script>
+</head>
+<body>
+  <p>Redirecting to Webull for <strong id="ticker">AAPL</strong>...</p>
+</body>
+</html>
